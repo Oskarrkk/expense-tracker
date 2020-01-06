@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Uzytkownicy list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}" />
+    <script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+<form class="form-horizontal" th:object="${user}" th:action="@{/user}">
+<div class="container">
+    <p th:text="${{user.username}}"></p>
+
+    <div class="row">
+        <a th:href="${'/user/addExpense?userId='+id}"> Add expense</a>
+    </div>
+
+    <table class = "table">
+        <thead>
+        <tr>
+            <td>Description</td>
+            <td>Cost</td>
+            <td>Date</td>
+            <td>Edit</td>
+        </tr>
+        </thead>
+        <tbody th:each=" expense : ${expenses}">
+        <tr>
+            <td th:text="${expense.description}"></td>
+            <td th:text="${expense.cost}"></td>
+            <td th:text="${expense.date}"></td>
+            <td th:text="EDIT"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+</body>
+</html>
