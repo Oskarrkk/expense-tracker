@@ -1,8 +1,12 @@
 package pl.oskarbudget.expensetracking.model;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -11,8 +15,13 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(min=2,message = "Description can't be blank")
     private String description;
-    private Long cost;
+    @NotNull
+    @Min(value = 1,message = "Cost must be greater than 0")
+    private Double cost;
+    @NotNull(message = "Date can't be blank")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
@@ -23,7 +32,7 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(String description, Long cost, Date date) {
+    public Expense(String description, Double cost, Date date) {
         this.description = description;
         this.cost = cost;
         this.date = date;
@@ -54,11 +63,11 @@ public class Expense {
         this.description = description;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 

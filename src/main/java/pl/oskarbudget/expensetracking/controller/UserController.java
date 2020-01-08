@@ -35,7 +35,12 @@ public class UserController {
     public String getUser(@RequestParam("id") Long id, Model model){
         Optional<User> user = userService.getUser(id);
         User userr = user.get();
+        double sum = 0;
         List<Expense> expenses = expenseService.getExpenses(userr);
+        for (Expense expens : expenses) {
+            sum = sum + expens.getCost();
+        }
+        model.addAttribute("sum_expenses", sum);
         model.addAttribute("expenses", expenses);
         model.addAttribute("user",user);
         model.addAttribute("id",id);
@@ -48,14 +53,14 @@ public class UserController {
         model.addAttribute("user",new User());
         return "create";
     }
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/addnewuser", method = RequestMethod.POST)
     public String createUsers(@Valid User user, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             System.out.println("There were errors!!!");
             bindingResult.getAllErrors().forEach(objectError -> {
                 System.out.println(objectError.getObjectName() +"" + objectError.getDefaultMessage());
             });
-            return "/user";
+            return "/login";
         }
         else{
             userService.createUser(user);

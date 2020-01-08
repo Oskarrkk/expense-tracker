@@ -36,6 +36,8 @@ public class WebSeciurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/create").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
@@ -43,13 +45,9 @@ public class WebSeciurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/login?logout")
                 .permitAll();;
     }
-  //  @Bean
- //   public PasswordEncoder passwordEncoder(){
- //       return new BCryptPasswordEncoder();
- //   }
 
     @EventListener(ApplicationReadyEvent.class)
     public void get(){

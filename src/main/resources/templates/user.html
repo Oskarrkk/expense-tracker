@@ -11,12 +11,11 @@
 <body>
 <form class="form-horizontal" th:object="${user}" th:action="@{/user}">
 <div class="container">
-    <p th:text="${{user.username}}"></p>
-
+    User: <p th:text="${{user.username}}"> </p>
+   Total expenses: <p th:text="${sum_expenses}"> </p>
     <div class="row">
-        <a th:href="${'/user/addExpense?userId='+id}"> Add expense</a>
+        <a th:href="${'/user/addExpense?userId='+id}"> Add new expense</a>
     </div>
-
     <table class = "table">
         <thead>
         <tr>
@@ -31,7 +30,7 @@
             <td th:text="${expense.description}"></td>
             <td th:text="${expense.cost}"></td>
             <td th:text="${expense.date}"></td>
-            <td th:text="EDIT"></td>
+            <td> <a th:href="${'/user/editExpense?expenseid='+expense.id+'&userid='+id}">Edit</a> </td>
         </tr>
         </tbody>
     </table>

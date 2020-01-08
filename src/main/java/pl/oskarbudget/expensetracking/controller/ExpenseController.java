@@ -26,7 +26,7 @@ public class ExpenseController {
         Optional<User> user = userService.getUser(id);
         user.ifPresent(model::addAttribute);
         Expense expense = new Expense();
-        model.addAttribute("users",user);
+     //   model.addAttribute("users",user);
         model.addAttribute("expense", expense);
 
         return "addExpense";
@@ -41,4 +41,21 @@ public class ExpenseController {
     }
 
 
+    @RequestMapping(value = "/user/editExpense")
+    String editExpense(@RequestParam Long expenseid,@RequestParam Long userid, Model model){
+        Optional<Expense> expense = expenseService.getExpense(expenseid);
+        Optional<User> user = userService.getUser(userid);
+        expense.ifPresent(model::addAttribute);
+        user.ifPresent(model::addAttribute);
+        return "editExpense";
+    }
+
+    @RequestMapping(value = "/user/editExpense", method = RequestMethod.POST)
+    String editExpense(@Valid Expense expense,@RequestParam Long userid,@RequestParam Long expenseid){
+        Optional<User> user = userService.getUser(userid);
+        user.ifPresent(expense::setUser);
+        expense.setId(expenseid);
+        expenseService.update(expense);
+        return "redirect:/user?id="+userid;
+    }
 }

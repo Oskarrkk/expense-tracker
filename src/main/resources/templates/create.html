@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" th:object="${user}" th:action="@{/users}" th:method="post">
+    <form class="form-horizontal" th:object="${user}" th:action="@{/addnewuser}" th:method="post">
         <div class="form-group">
             <label class="control-label">Username:</label>
             <input type="text" class="form-control" th:field="*{username}"/>

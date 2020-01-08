@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" th:object="${expense}"  th:action="@{/user/addExpense}" th:method="post">
+    <form class="form-horizontal" th:object="${expense}"  th:action="@{/user/editExpense}" th:method="post">
         <div class="form-group">
             <label class="control-label">Description:</label>
             <input type="text" class="form-control" th:field="*{description}"/>
@@ -35,8 +35,16 @@
                         th:value="${user.id}"></option>
             </select>
         </div>
+        <div class="form-group">
+            <label class="control-label">ExpenseId:</label>
+            <select name="expenseid" >
+                <option
+                        th:text="${expense.id}"
+                        th:value="${expense.id}"></option>
+            </select>
+        </div>
         <div class="row">
-            <button type="submit" class="btn btn-default">Add expense</button>
+            <button type="submit" class="btn btn-default">Edit expense</button>
         </div>
     </form>
 </div>
